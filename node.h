@@ -4,12 +4,10 @@
 typedef struct
 {
   void *value;
-  void *next;
-  
-  void (*destroy)(void *self);
+  void *next; 
 } Node;
 
-void *new_node(size_t size, void *anything);
-void destroy_node(void *self);
+void *NodeCreate(size_t size, void *anything);
+void DestroyNode(void *self);
 
 #endif

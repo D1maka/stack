@@ -3,17 +3,14 @@
 #include <stdlib.h>
 #include "stack.h"
 
-void *stack_create()
+void *StackCreate()
 {
   Stack *stack = malloc(sizeof(Stack));
-  stack->push = stack_push;
-  stack->pop = stack_pop;
-  stack->peek = stack_peek;
-  stack->is_empty = stack_is_empty;
+
   return stack;
 }
 
-int stack_is_empty(void *self)
+int IsEmpty(void *self)
 {
   Stack *stack = self;
   if(!self) {
@@ -25,23 +22,24 @@ int stack_is_empty(void *self)
   }
 }
 
-void stack_push(void *self, size_t size, void *anything)
+void Push(void *self, size_t size, void *anything)
 {
   Stack *stack = self;
-  Node *node = new_node(size, anything);
+  Node *node = NodeCreate(size, anything);
   node->next = stack->top;
   stack->top = node;
 }
 
-void *stack_pop(void *self)
+void *Pop(void *self)
 {
   Stack *stack = self;
   Node *node = stack->top;
   stack->top = node->next;
+  DestroyNode(node);
   return node->value;
 }
 
-void *stack_peek(void *self)
+void *Peek(void *self)
 {
   Stack *stack = self;
   Node *node = stack->top;

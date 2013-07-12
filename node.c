@@ -3,15 +3,16 @@
 #include <stdlib.h>
 #include "node.h"
 
-void *new_node(size_t size, void *anything)
+void *NodeCreate(size_t size, void *anything)
 {
   Node *node = malloc(sizeof(Node));
   node->value = calloc(1, size);
   memcpy(node->value, anything, size);
+
   return node;
 }
 
-void destroy_node(void *self)
+void DestroyNode(void *self)
 {
   Node *node = self;
   
