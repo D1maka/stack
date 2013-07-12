@@ -5,11 +5,11 @@ void *Alloc(size_t size, deallocate func)
   char *valuePtr;
   Object *obj = (Object *)calloc(sizeof(Object) + size, 1);
   obj->retainCount = 1;
+  obj->Deallocate = func;
   valuePtr = (char *) obj;
   valuePtr += sizeof(Object);
   obj->value = valuePtr;
-  obj->Deallocate = func;
-  
+
   return valuePtr;
 }
 
