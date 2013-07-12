@@ -1,6 +1,6 @@
 #include "object.h"
 
-void *Alloc(size_t size)
+void *Alloc(size_t size, deallocate func)
 {
   char *valuePtr;
   Object *obj = (Object *)calloc(sizeof(Object) + size, 1);
@@ -8,6 +8,7 @@ void *Alloc(size_t size)
   valuePtr = (char *) obj;
   valuePtr += sizeof(Object);
   obj->value = valuePtr;
+  obj->Deallocate = func;
   
   return valuePtr;
 }
@@ -29,6 +30,9 @@ void Release(void *ptr)
   
   if(obj->retainCount == 0)
   {
+    if(!obj->Deallocate){
+      obj->Deallocate(obj->value);
+    }
     free(obj);
   }
 }
