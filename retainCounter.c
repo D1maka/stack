@@ -1,6 +1,6 @@
-#include "object.h"
+#include "retainCounter.h"
 
-void *Alloc(size_t size, deallocate func)
+void *Create(size_t size, deallocate func)
 {
   char *valuePtr;
   Object *obj = (Object *)calloc(sizeof(Object) + size, 1);
@@ -8,7 +8,6 @@ void *Alloc(size_t size, deallocate func)
   obj->Deallocate = func;
   valuePtr = (char *) obj;
   valuePtr += sizeof(Object);
-  obj->value = valuePtr;
 
   return valuePtr;
 }
@@ -31,7 +30,7 @@ void Release(void *ptr)
   if(obj->retainCount == 0)
   {
     if(!obj->Deallocate){
-      obj->Deallocate(obj->value);
+      obj->Deallocate(ptr);
     }
     free(obj);
   }
