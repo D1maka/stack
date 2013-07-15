@@ -1,37 +1,33 @@
 #include "retainCounter.h"
 
 void *Create(size_t size, deallocate func)
-{
-  char *valuePtr;
-  Object *obj = (Object *)calloc(sizeof(Object) + size, 1);
-  obj->retainCount = 1;
-  obj->Deallocate = func;
-  valuePtr = (char *) obj;
-  valuePtr += sizeof(Object);
+{ 
+  RetainCounter *retainCounter = malloc(sizeof(RetainCounter));
+  retainCounter->retainCount = 1;
+  retainCounter->Deallocate = func;
+  void *valuePtr = calloc(1, size);
+  BaseObject *base = (BaseObject *) valuePtr;
+  base->counter = retainCounter;
 
   return valuePtr;
 }
 
 void Retain(void *ptr)
-{
-  char *valuePtr = (char *) ptr;
-  valuePtr -= sizeof(Object);
-  Object *obj = (Object *)valuePtr;
-  obj->retainCount++;
+{  
+  BaseObject *base = (BaseObject *) ptr;
+  bace->counter->retainCount++;
 }
 
 void Release(void *ptr)
-{
-  char *valuePtr = (char *) ptr;
-  valuePtr -= sizeof(Object);
-  Object *obj = (Object *)valuePtr;
-  obj->retainCount--;
+{  
+  BaseObject *base = (BaseObject *) ptr;
+  bace->counter->retainCount--;
   
-  if(obj->retainCount == 0)
+  if(base->counter->retainCount == 0)
   {
-    if(!obj->Deallocate){
-      obj->Deallocate(ptr);
+    if(!base->counter->Deallocate){
+      base->counter->Deallocate(ptr);
     }
-    free(obj);
+    //free();
   }
 }
