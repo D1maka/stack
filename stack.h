@@ -5,6 +5,7 @@
 
 typedef struct
 {
+  RetainCounter *counter;
   void *top;
 } Stack;
 
@@ -13,5 +14,5 @@ void Pop(void *self);
 void Peek(void *self);
 int IsEmpty(void *self);
 
-void *StackCreate();
+void *StackCreate(Deallocate func);
 #endif

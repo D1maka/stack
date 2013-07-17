@@ -1,6 +1,6 @@
 #include "retainCounter.h"
 
-void *Create(size_t size, deallocate func)
+/*void *Create(size_t size, deallocate func)
 { 
   RetainCounter *retainCounter = malloc(sizeof(RetainCounter));
   retainCounter->retainCount = 1;
@@ -10,7 +10,7 @@ void *Create(size_t size, deallocate func)
   base->counter = retainCounter;
 
   return valuePtr;
-}
+}*/
 
 void Retain(void *ptr)
 {  

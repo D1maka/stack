@@ -9,7 +9,7 @@ typedef struct
 
 typedef void (*deallocate)(void *);
 
-void *Create(size_t size, deallocate func);
+//void *Create(size_t size, deallocate func);
 void Retain(void *ptr);
 void Release(void *ptr);
 
