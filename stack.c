@@ -41,9 +41,9 @@ void *Pop(void *self)
 {
   Stack *stack = self;
   Node *node = stack->top;
-  Retain(node);
   Release(stack->top);
   stack->top = node->next;
+  Retain(node->next);
   DestroyNode(node);
   
   return node->value;
@@ -53,6 +53,6 @@ void *Peek(void *self)
 {
   Stack *stack = self;
   Node *node = stack->top;
-  Retain(node);
+
   return node->value;
 }
