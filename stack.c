@@ -44,7 +44,7 @@ void *Pop(void *self)
   Release(stack->top);
   stack->top = node->next;
   Retain(node->next);
-  DestroyNode(node);
+  Release(node);
   
   return node->value;
 }

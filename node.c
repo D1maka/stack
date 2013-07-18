@@ -29,6 +29,6 @@ void DestroyNode(void *self)
     if(node->next){
       Release(node->next);
     }
-    Release(self);
+    free(self);
   }
 }
