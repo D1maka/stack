@@ -9,7 +9,7 @@ typedef struct
   void *top;
 } Stack;
 
-void Push(void *self, size_t size, void *anything);
+void Push(void *self, size_t size, void *anything, deallocate func);
 void Pop(void *self);
 void Peek(void *self);
 int IsEmpty(void *self);

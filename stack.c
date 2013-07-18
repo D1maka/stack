@@ -27,10 +27,10 @@ int IsEmpty(void *self)
   }
 }
 
-void Push(void *self, size_t size, void *anything)
+void Push(void *self, size_t size, void *anything, deallocate func)
 {
   Stack *stack = self;
-  Node *node = NodeCreate(size, anything);
+  Node *node = NodeCreate(size, anything, func);
   Release(stack->top);
   node->next = stack->top;
   Retain(node->next);
