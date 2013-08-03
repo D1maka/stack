@@ -5,11 +5,11 @@
 typedef struct
 {
   RetainCounter *counter;
-  void *value;
-  void *next; 
-} Node;
+  LSBaseObject *value;
+  LSBaseObject *next; 
+} LSNode;
 
-void *NodeCreate(size_t size, void *anything, deallocate func);
-void DestroyNode(void *self);
+LSNode *LSNodeCreate(LSBaseObject *anything);
+void LSDestroyNode(LSNode *self);
 
 #endif

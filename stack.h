@@ -6,13 +6,13 @@
 typedef struct
 {
   RetainCounter *counter;
-  void *top;
-} Stack;
+  LSNode *top;
+} LSStack;
 
-void Push(void *self, size_t size, void *anything, deallocate func);
-void Pop(void *self);
-void Peek(void *self);
-int IsEmpty(void *self);
+void LSPush(LSStack *self, LSBaseObject *anything);
+LSBaseObject *LSPop(LSStack *self);
+LSBaseObject *LSPeek(LSStack *self);
+int LSIsEmpty(LSStack *self);
 
-void *StackCreate(Deallocate func);
+LSStack *LSStackCreate();
 #endif

@@ -3,32 +3,22 @@
 #include <stdlib.h>
 #include "node.h"
 
-void *NodeCreate(size_t size, void *anything, deallocate func)
+LSNode *LSNodeCreate(LSBaseObject *anything)
 {
-  Node *node = malloc(sizeof(Node));
-  RetainCounter *retainCounter = malloc(sizeof(RetainCounter));
-  retainCounter->retainCount = 1;
-  retainCounter->Deallocate = func;
-  node->value = calloc(1, size);
-  memcpy(node->value, anything, size);
-  BaseObject *base = (BaseObject*) node;
+  LSNode *node = malloc(sizeof(Node));
+  LSRetainCounter *retainCounter = LSCreateRetainCounter();
+  node->value = anything;
+  LSBaseObject *base = (LSBaseObject*) node;
   base->counter = retainCounter;
-  Retain(node->value);
 
   return node;
 }
 
-void DestroyNode(void *self)
+void LSDestroyNode(LSNode *self)
 {
-  Node *node = self;
+  LSNode *node = self;
   
   if(self) {
-    if(node->value){ 
-      Release(node->value);
-    } 
-    if(node->next){
-      Release(node->next);
-    }
     free(self);
   }
 }

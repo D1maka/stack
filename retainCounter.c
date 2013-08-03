@@ -1,33 +1,26 @@
 #include "retainCounter.h"
 
-/*void *Create(size_t size, deallocate func)
+LSRetainCounter *LSCreateRetainCounter()
 { 
-  RetainCounter *retainCounter = malloc(sizeof(RetainCounter));
+  LSRetainCounter *retainCounter = malloc(sizeof(RetainCounter));
   retainCounter->retainCount = 1;
-  retainCounter->Deallocate = func;
-  void *valuePtr = calloc(1, size);
-  BaseObject *base = (BaseObject *) valuePtr;
-  base->counter = retainCounter;
-
-  return valuePtr;
-}*/
-
-void Retain(void *ptr)
-{  
-  BaseObject *base = (BaseObject *) ptr;
-  bace->counter->retainCount++;
+  
+  return retainCounter;
 }
 
-void Release(void *ptr)
+void LSRetain(LSBaseObject *ptr)
 {  
-  BaseObject *base = (BaseObject *) ptr;
-  bace->counter->retainCount--;
+  ptr->counter->retainCount++;
+}
+
+void LSRelease(LSBaseObject *ptr)
+{  
+  ptr->counter->retainCount--;
   
-  if(base->counter->retainCount == 0)
+  if(ptr->counter->retainCount == 0)
   {
-    if(!base->counter->Deallocate){
-      base->counter->Deallocate(ptr);
+    if(!ptr->counter->Deallocate){
+      ptr->counter->Deallocate(ptr);
     }
-    //free();
   }
 }

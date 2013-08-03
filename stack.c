@@ -3,56 +3,68 @@
 #include <stdlib.h>
 #include "stack.h"
 
-void *StackCreate(Deallocate func)
+LSStack *LSStackCreate()
 {
-  Stack *stack = malloc(sizeof(Stack));
-  RetainCounter *retainCounter = malloc(sizeof(RetainCounter));
-  retainCounter->retainCount = 1;
-  retainCounter->Deallocate = func;
-  BaseObject *base = (BaseObject*) stack;
+  LSStack *stack = malloc(sizeof(Stack));
+  LSRetainCounter *retainCounter = LSCreateRetainCounter();
+  LSBaseObject *base = (LSBaseObject*) stack;
   base->counter = retainCounter;
   
   return stack;
 }
 
-int IsEmpty(void *self)
+int LSIsEmpty(LSStack *self)
 {
-  Stack *stack = self;
+  LSStack *stack = self;
+  LSRetain(stack);
   if(!self) {
+    LSRelease(stack);
     return 1;
   } else if(!stack->top) {
+    LSRelease(stack);
     return 1;
   } else {
+    LSRelease(stack);
     return 0;
   }
 }
 
-void Push(void *self, size_t size, void *anything, deallocate func)
+void LSPush(LSStack *self, LSBaseObject *anything)
 {
-  Stack *stack = self;
-  Node *node = NodeCreate(size, anything, func);
-  Release(stack->top);
+  LSStack *stack = self;
+  LSRetain(stack);
+  
+  LSNode *node = LSNodeCreate(anything);
+  
   node->next = stack->top;
-  Retain(node->next);
+  
   stack->top = node;
+  LSRelease(stack);
 }
 
-void *Pop(void *self)
+LSBaseObject *LSPop(LSStack *self)
 {
-  Stack *stack = self;
-  Node *node = stack->top;
-  Release(stack->top);
+  LSStack *stack = self;
+  LSRetain(stack);
+  LSNode *node = stack->top;
+  LSRetain(node);
+  
   stack->top = node->next;
-  Retain(node->next);
-  Release(node);
+  LSRelease(stack);
+  LSRelease(node);
   
   return node->value;
 }
 
-void *Peek(void *self)
+LSBaseObject *LSPeek(LSStack *self)
 {
-  Stack *stack = self;
-  Node *node = stack->top;
+  LSStack *stack = self;
+  LSRetain(stack);
+  LSNode *node = stack->top;
+  LSRetain(node);
+  
+  LSRelease(stack);
+  LSRelease(node);
 
   return node->value;
 }

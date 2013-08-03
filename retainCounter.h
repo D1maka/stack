@@ -5,12 +5,12 @@ typedef struct
 {
   int retainCount;
   void (*Deallocate)(void *object);
-} RetainCounter;
+} LSRetainCounter;
 
 typedef void (*deallocate)(void *);
 
-//void *Create(size_t size, deallocate func);
-void Retain(void *ptr);
-void Release(void *ptr);
+LSRetainCounter *LSCreateRetainCounter();
+void LSRetain(LSBaseObject *ptr);
+void LSRelease(LSBaseObject *ptr);
 
 #endif
