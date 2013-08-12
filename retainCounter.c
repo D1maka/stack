@@ -25,7 +25,8 @@ void LSRelease(void *ptr)
 
   if(object->counter->retainCount == 0)
   {
-    if(!object->counter->Deallocate){
+      printf("\nHello from release, object has 0 counts\n\n");
+    if(object->counter->Deallocate){
       object->counter->Deallocate(ptr);
     }
   }
