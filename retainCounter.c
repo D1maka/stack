@@ -1,26 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "retainCounter.h"
+#include "baseObject.h"
 
 LSRetainCounter *LSCreateRetainCounter()
-{ 
-  LSRetainCounter *retainCounter = malloc(sizeof(RetainCounter));
+{
+  LSRetainCounter *retainCounter = malloc(sizeof(LSRetainCounter));
   retainCounter->retainCount = 1;
-  
+
   return retainCounter;
 }
 
-void LSRetain(LSBaseObject *ptr)
-{  
-  ptr->counter->retainCount++;
+void LSRetain(void *ptr)
+{
+  LSBaseObject *object = (LSBaseObject*) ptr;
+  object->counter->retainCount++;
 }
 
-void LSRelease(LSBaseObject *ptr)
-{  
-  ptr->counter->retainCount--;
-  
-  if(ptr->counter->retainCount == 0)
+void LSRelease(void *ptr)
+{
+  LSBaseObject *object = (LSBaseObject*) ptr;
+  object->counter->retainCount--;
+
+  if(object->counter->retainCount == 0)
   {
-    if(!ptr->counter->Deallocate){
-      ptr->counter->Deallocate(ptr);
+    if(!object->counter->Deallocate){
+      object->counter->Deallocate(ptr);
     }
   }
 }

@@ -5,7 +5,7 @@
 
 LSNode *LSNodeCreate(LSBaseObject *anything)
 {
-  LSNode *node = malloc(sizeof(Node));
+  LSNode *node = malloc(sizeof(LSNode));
   LSRetainCounter *retainCounter = LSCreateRetainCounter();
   node->value = anything;
   LSBaseObject *base = (LSBaseObject*) node;
@@ -17,8 +17,8 @@ LSNode *LSNodeCreate(LSBaseObject *anything)
 void LSDestroyNode(LSNode *self)
 {
   LSNode *node = self;
-  
-  if(self) {
-    free(self);
+
+  if(node) {
+    free(node);
   }
 }

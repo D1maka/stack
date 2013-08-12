@@ -5,65 +5,65 @@
 
 LSStack *LSStackCreate()
 {
-  LSStack *stack = malloc(sizeof(Stack));
+  LSStack *newStack = malloc(sizeof(LSStack));
   LSRetainCounter *retainCounter = LSCreateRetainCounter();
-  LSBaseObject *base = (LSBaseObject*) stack;
+  LSBaseObject *base = (LSBaseObject*) newStack;
   base->counter = retainCounter;
-  
-  return stack;
+
+  return newStack;
 }
 
 int LSIsEmpty(LSStack *self)
 {
-  LSStack *stack = self;
-  LSRetain(stack);
+  LSStack *currentStack = self;
+  LSRetain(currentStack);
   if(!self) {
-    LSRelease(stack);
+    LSRelease(currentStack);
     return 1;
-  } else if(!stack->top) {
-    LSRelease(stack);
+  } else if(!currentStack->top) {
+    LSRelease(currentStack);
     return 1;
   } else {
-    LSRelease(stack);
+    LSRelease(currentStack);
     return 0;
   }
 }
 
 void LSPush(LSStack *self, LSBaseObject *anything)
 {
-  LSStack *stack = self;
-  LSRetain(stack);
-  
+  LSStack *currentStack = self;
+  LSRetain(currentStack);
+
   LSNode *node = LSNodeCreate(anything);
-  
-  node->next = stack->top;
-  
-  stack->top = node;
-  LSRelease(stack);
+
+  node->next = (LSBaseObject*) currentStack->top;
+
+  currentStack->top = node;
+  LSRelease(currentStack);
 }
 
 LSBaseObject *LSPop(LSStack *self)
 {
-  LSStack *stack = self;
-  LSRetain(stack);
-  LSNode *node = stack->top;
+  LSStack *currentStack = self;
+  LSRetain(currentStack);
+  LSNode *node = currentStack->top;
   LSRetain(node);
-  
-  stack->top = node->next;
-  LSRelease(stack);
+
+  currentStack->top =  (LSNode *) node->next;
+  LSRelease(currentStack);
   LSRelease(node);
-  
+
   return node->value;
 }
 
 LSBaseObject *LSPeek(LSStack *self)
 {
-  LSStack *stack = self;
-  LSRetain(stack);
-  LSNode *node = stack->top;
+  LSStack *currentStack = self;
+  LSRetain(currentStack);
+  LSNode *node = currentStack->top;
   LSRetain(node);
-  
-  LSRelease(stack);
+
+  LSRelease(currentStack);
   LSRelease(node);
 
   return node->value;

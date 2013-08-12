@@ -9,8 +9,8 @@ typedef struct
 
 typedef void (*deallocate)(void *);
 
-LSRetainCounter *LSCreateRetainCounter();
-void LSRetain(LSBaseObject *ptr);
-void LSRelease(LSBaseObject *ptr);
+LSRetainCounter *LSCreateRetainCounter(void);
+void LSRetain(void *ptr);
+void LSRelease(void *ptr);
 
 #endif

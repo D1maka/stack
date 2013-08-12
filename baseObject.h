@@ -1,9 +1,10 @@
 #ifndef _baseObject_h
 #define _baseObject_h
-
+#include "retainCounter.h"
 typedef struct
 {
-  RetainCounter *counter;
-} BaseObject;
+  LSRetainCounter *counter;
+} LSBaseObject;
 
-#endif _baseObject_h
+LSBaseObject *LSCreateBaseObject();
+#endif

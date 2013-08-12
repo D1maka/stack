@@ -5,7 +5,7 @@
 
 typedef struct
 {
-  RetainCounter *counter;
+  LSRetainCounter *counter;
   LSNode *top;
 } LSStack;
 
